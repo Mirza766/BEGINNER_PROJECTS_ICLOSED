@@ -8,5 +8,4 @@ function FetchData(){
    return <div>Code is:  {data.SecurityCode}</div>
 }
 
-
 export default FetchData;

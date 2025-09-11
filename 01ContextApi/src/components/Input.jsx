@@ -3,22 +3,28 @@ import UserContext from "../context/UserCont";
 function Input(){
     const [SecurityCode,setSecurityCode]=useState('');
     const {setdata,IdGenerator}=useContext(UserContext)
-
+    const [Label,setLabel]=useState('') 
     const Submission=(e)=>{
         e.preventDefault();
         setdata(({SecurityCode}))
     }
+    const setSecurityCodeLabel=(e)=>{
+        setSecurityCode(e.target.value)
+        setLabel(e.target.value)
+    }
     
     return (
         <div>
-      <label htmlFor={IdGenerator}>First Name</label>
+      <label htmlFor={IdGenerator}>{Label}</label>
       <br/>
       <input type='text' 
       id={IdGenerator}  
       value={SecurityCode}
-      onChange={(e)=>setSecurityCode(e.target.value)}
+      onChange={setSecurityCodeLabel}
+      
       placeholder="Enter the Code"/>
       <button onClick={Submission}>Submit</button>
+      <br/>
        </div>
   
     );

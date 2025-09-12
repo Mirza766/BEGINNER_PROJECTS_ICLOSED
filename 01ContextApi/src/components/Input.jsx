@@ -13,7 +13,7 @@ function Input(){
         setLabel(e.target.value)
     }
 
-    
+
     return (
         <div>
       <label htmlFor={IdGenerator}>{Label}</label>
@@ -22,12 +22,10 @@ function Input(){
       id={IdGenerator}  
       value={SecurityCode}
       onChange={setSecurityCodeLabel}
-      
       placeholder="Enter the Code"/>
       <button onClick={Submission}>Submit</button>
       <br/>
        </div>
-  
     );
 }
 export default Input;

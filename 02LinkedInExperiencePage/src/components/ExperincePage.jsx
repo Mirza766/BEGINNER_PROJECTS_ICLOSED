@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import ExperienceContext from "../context/ExperienceContext";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 
@@ -16,6 +17,7 @@ endMonth:'',
 endYear:'',
 currentlyWorking: false,
 });
+const navigate=useNavigate();
 
 const {setAddExperience}=useContext(ExperienceContext)
 //const [title,setTitle]=useState('');
@@ -33,6 +35,7 @@ const onSubmission=(e)=>{
         return
     }
     setAddExperience((prev) => [...prev,formData]);
+    navigate("/experience");
 }
 
 const titleWrite = (e) => {
@@ -90,6 +93,7 @@ return (
 <div>
     <form onSubmit={onSubmission}>
     <div>
+      <h2>Add Experiences</h2>
 <label name='Title'>Title*</label>
 <br/>
 <input placeholder='Ex. Retail Sales Manager' value={formData.title} onChange={titleWrite}/>
@@ -128,11 +132,10 @@ return (
 
  {!formData.currentlyWorking && (
             <div>
-              <label className="block font-semibold">End Date*</label>
+              <label>End Date*</label>
               <br/>
               <select
                 name="endMonth"
-                className="w-full p-2 border rounded"
                 value={formData.endMonth}
                 onChange={endMonthWrite}
               >
@@ -146,7 +149,6 @@ return (
                 type="number"
                 name="endYear"
                 placeholder="Year"
-                className="w-full p-2 border rounded mt-2"
                 value={formData.endYear}
                 onChange={endYearWrite}
               />

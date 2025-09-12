@@ -3,9 +3,9 @@ import ExperienceContext from "./ExperienceContext";
 import { useState } from "react";
 
 const ExperienceContextProvider=({children})=>{
-const [addExperice,setAddExperience]=useState([])
+const [addExperience,setAddExperience]=useState([])
 return(
-<ExperienceContext.Provider value={{addExperice,setAddExperience}}>
+<ExperienceContext.Provider value={{addExperience,setAddExperience}}>
 {children}
 </ExperienceContext.Provider>
 )

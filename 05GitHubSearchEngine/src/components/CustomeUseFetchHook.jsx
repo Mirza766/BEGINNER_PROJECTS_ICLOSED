@@ -1,25 +1,31 @@
 import { useState, useEffect } from "react";
 
 const useFetch = (url) => {
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [data,setData]=useState(null);
+  const [error, setError] = useState(null);
+  const [data,setData]=useState(true);
   useEffect(() => {
-    const fetchData = async () => {
+    if (!url) return;
+    const fetchApi = async () => {
       try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error("Network response error");
+        if (!response.ok) {
+          throw new Error(
+            `GitHub API Fetching Failed: ${response.status} ${response.statusText}`
+          );
+        }
+
         const result = await response.json();
         setData(result);
       } catch (err) {
-        setError(err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
-  }, [url]);
+    fetchApi();
+  },[url]);
 
   return { data, loading, error };
 };

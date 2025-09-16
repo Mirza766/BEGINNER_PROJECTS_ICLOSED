@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import TicketContextProvider from './context/TicketContextProvider'
 import BookButton from './components/BookButtonPopup'
+import ShowData from './components/ShowData'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,6 +12,7 @@ function App() {
   return (
     <TicketContextProvider>
       <BookButton/>
+      <ShowData/>
     </TicketContextProvider>
   )
 }

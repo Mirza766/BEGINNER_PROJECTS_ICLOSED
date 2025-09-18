@@ -19,7 +19,7 @@ currentlyWorking: false,
 });
 const navigate=useNavigate();
 
-const {setAddExperience}=useContext(ExperienceContext)
+const {setAddExperience,AddExperience}=useContext(ExperienceContext)
 //const [title,setTitle]=useState('');
 //const [employement,setEmployement]=useState('')
 //const [company,setCompany]=useState('')
@@ -29,12 +29,28 @@ const {setAddExperience}=useContext(ExperienceContext)
 
 const onSubmission=(e)=>{
     e.preventDefault();
+  // validate required fields
+  if (!formData.title || !formData.company || !formData.startMonth || !formData.startYear) {
+    alert("Title, Company, Start Month, and Start Year are required.");
+    return;
+  }
 
-    if (!formData.title || !formData.company  || !formData.endMonth  || !formData.startMonth || !formData.endYear || !formData.startYear){
-        alert('These are the required Fields ');
-        return
-    }
-    setAddExperience((prev) => [...prev,formData]);
+  // if not currently working, require end date
+  if (!formData.currentlyWorking && (!formData.endMonth || !formData.endYear)) {
+    alert("End Month and End Year are required if you are not currently working.");
+    return;
+  }
+    AddExperience(formData)
+    setFormData({
+  title:'',
+  employement:'',
+  company:'',
+  startMonth:'',
+  startYear:'',
+  endMonth:'',
+  endYear:'',
+  currentlyWorking:false
+});
     navigate("/experience");
 }
 

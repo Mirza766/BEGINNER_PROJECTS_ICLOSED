@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import addtodoContext from "../context/addtodoContext";
 
 function AddingTodo(){
-
     const {Addtodo}=useContext(addtodoContext);
   const [todolist,settodolist]=useState("");
 
@@ -11,6 +10,7 @@ function AddingTodo(){
        Addtodo({todolist});
        settodolist('')
   }
+
 
     return (
 <form onSubmit={onSubmission}>

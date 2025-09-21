@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+
 import addtodoContext from "./addtodoContext";
-
+import useLocalStorage from "../API/customHook";
 const AddtodoContextProvider=(({children})=>{
-
-   const [addtodo,setaddtodo]=useState([])
+   const [addtodo, setaddtodo] = useLocalStorage("tododata", []);  //Our Custom Hook
     const Addtodo=(data)=>{
       setaddtodo((prev)=>[...prev,{id:Date.now(),...data}])
     }

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext,useEffect } from 'react'
 import ExperienceContext from '../context/ExperienceContext'
 import { useForm } from "react-hook-form";
 import {DevTool} from "@hookform/devtools";
-
+import {useNavigate} from "react-router-dom"
 
 
 
@@ -20,30 +20,67 @@ const AddingExperience = () => {
       endMonth: '',
       endYear: '',
       currentlyWorking: false,
-    }
+    },
+    mode:'onChange'
   })
 
-
-  const { control, handleSubmit, formState, register } = form
-  const { errors } = formState;
+const navigate=useNavigate();
 
 
+  const { control, handleSubmit, formState, register,reset,trigger,watch,getValues,setValue } = form
+  const { errors,isSubmitSuccessful,isDirty,isSubmitting,isValid } = formState;
+
+console.log("States Status: ",{isSubmitting,isSubmitSuccessful,isDirty,isValid})
 const onSubmit=(data)=>{
+  AddExperience(data);
+  
+reset();
+  navigate("/experience");
    console.log(data);
 }
 
+
+useEffect(()=>{
+  if (isSubmitSuccessful )
+  reset();
+},[isSubmitSuccessful])
+
+
+const handleGetValues=()=>{
+  console.log("Get Values: ",getValues("company"))
+}
+
+const handleSetValues=()=>{
+  setValue("company","iclosed",{
+    shouldDirty:true,
+    shouldValidate:true,
+    shouldTouch:true
+  })
+}
 
 
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <h1>Add Experience</h1>
         <div>
           <label name='title'>Title</label>
           <br />
           <input type='text' placeholder='Enter the Title' {...register('title', {
-            required: 'Title is required'
+            required: 'Title is required',
+            validate:{
+              checktitle:(FieldValue)=>{
+                return(
+                  !FieldValue.endsWith("Estimation")|| "Invalid Title name"
+                )
+              },
+              crossCheck:async(fieldValue)=>{
+               const response=await fetch(`https://jsonplaceholder.typicode.com/users?username=${fieldValue}`);
+               const data=await response.json();
+               return data.length==0 || "Invalid Title"
+              }
+            }
           })} />
           <p style={{
             color: "red",
@@ -70,7 +107,8 @@ const onSubmit=(data)=>{
         <div>
           <label name='company'>Company or Organization</label>
           <br/>
-          <input type='text' placeholder='Enter the Company' {...register('company', {
+          <input type='text' placeholder='Enter the Company' {...register('company',{disabled:watch('title')===""
+          } ,{
             required: "Company name is required"
           })} />
           <p style={{
@@ -150,7 +188,12 @@ const onSubmit=(data)=>{
             marginTop: "4px"
           }}>{errors.endYear?.message}</p>
             </div>
-           <button type='submit'>Submit</button>
+
+            <button type='button' onClick={()=>reset()}>Reset</button>
+            <button type='button' onClick={()=>trigger()}>Trigger</button>
+            <button type='button' onClick={handleGetValues}>Get Company Value</button>
+            <button type='button' onClick={handleSetValues}>Set Company Value</button>
+           <button type='submit' disabled={!isDirty ||  isSubmitting}>Submit</button>
 
             
 

@@ -103,7 +103,10 @@ const endYearWrite = (e) => {
   setFormData((prev) => ({...prev,endYear: value}));
 };
 
-
+const onChange=(e, key,value)=>{
+  const value = e.target.value;
+  setFormData((prev)=>({...prev,key:value}))
+}
 
 return (
 <div>
@@ -112,7 +115,7 @@ return (
       <h2>Add Experiences</h2>
 <label name='Title'>Title*</label>
 <br/>
-<input placeholder='Ex. Retail Sales Manager' value={formData.title} onChange={titleWrite}/>
+<input placeholder='Ex. Retail Sales Manager' value={formData.title} onChange={onChange(title,value)}/>
 </div>
 <div>
 <label>Employement Type</label>

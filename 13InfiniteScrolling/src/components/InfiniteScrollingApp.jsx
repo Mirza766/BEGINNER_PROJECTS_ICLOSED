@@ -22,6 +22,7 @@ const InfiniteScrollingApp = () => {
         threshold: 1,
     })
 
+    
     useEffect(() => {
         if (inView && hasNextPage) {
             fetchNextPage();

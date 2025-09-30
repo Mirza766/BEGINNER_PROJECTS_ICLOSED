@@ -16,7 +16,7 @@ function Input(){
 
     return (
         <div>
-      <label htmlFor={IdGenerator}>{Label}</label>
+      <label id={IdGenerator}>{Label}</label>
       <br/>
       <input type='text' 
       id={IdGenerator}  
